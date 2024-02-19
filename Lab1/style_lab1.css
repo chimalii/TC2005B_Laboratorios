@@ -1,0 +1,46 @@
+.negrita {
+    font-weight: bold;
+  }
+
+h1{
+    font-size: 2em;
+    color: blue;
+    font-weight: bold;
+    text-align: right;
+}
+
+h2{
+    font-size: 1em;
+    font-style: italic;
+    color: #333;
+}
+
+h3{
+    background-color: #003fc7; 
+    color: #ebe4e4; 
+    padding: 20px; 
+}
+
+p.justificado{
+    text-align: justify;
+}
+
+table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+}
+  th, td {
+    background-color: #96D4D4;
+    padding: 10px;
+}
+
+body{
+    margin: 0 auto;
+    max-width: 50em;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    line-height: 1.5;
+    padding: 4em, 1em;
+    color: #555;
+}
+
+
