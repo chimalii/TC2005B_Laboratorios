@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <title>Productos para Bicicletas</title>
+    <link rel="stylesheet" href="style_lab6.css">
+</head>
+<body>
+    <div class="container">
+        <div class="product-card">
+        <img src="casco.jpg" alt="Casco">
+        <h2>Casco</h2>
+        <p>Precio: $560 MXN</p>
+        <label for="casco-quantity">Cantidad:</label>
+        <input type="number" id="casco-quantity" min="0" value="0">
+        <br>
+        <button onclick="addToCart('casco', 560)">Agregar a la bolsa</button>
+        </div>
+        <div class="product-card">
+        <img src="guantes.jpg" alt="Guantes">
+        <h2>Guantes</h2>
+        <p>Precio: $350 MXN</p>
+        <label for="guantes-quantity">Cantidad:</label>
+        <input type="number" id="guantes-quantity" min="0" value="0">
+        <br>
+        <label for="color">Color:</label>
+        <select id="color">
+            <option value="negro">Negro</option>
+            <option value="azul">Azul</option>
+            <option value="rojo">Rojo</option>
+        </select>
+        <br>
+        <button onclick="addToCart('guantes', 350)">Agregar a la bolsa</button>
+        </div>
+        <div class="product-card">
+        <img src="candado.jpg" alt="Candado">
+        <h2>Candado</h2>
+        <p>Precio: $190 MXN</p>
+        <label for="candado-quantity">Cantidad:</label>
+        <input type="number" id="candado-quantity" min="0" value="0">
+        <br>
+        <button onclick="addToCart('candado', 190)">Agregar a la bolsa</button>
+        </div>
+        <div id="total-container">
+        <p>Total: $<span id="total-price">0</span> MXN</p>
+        <p>IVA: $<span id="iva">0</span> MXN</p>
+        <p id="discount-info"></p>
+        <p id="discount-amount"></p>
+        </div>
+    </div>
+    <script src="dom_lab6.js"></script>
+</body>
+</html>
