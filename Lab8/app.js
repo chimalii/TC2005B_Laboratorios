@@ -1,182 +1,155 @@
-//fs es el módulo de node que nos permite leer y escribir archivos
-//contiene las funciones para manipular el sistema de archivos
 const filesystem = require('fs');
 
-//Crea y escribe un archivo
-filesystem.writeFileSync('hola.txt', 'This file was created by Node.js! \nPrueba 2');
+const html_header = `
+  <!DOCTYPE html>
+  <html>
+      <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>Clasificador peliculas</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <script src="https://cdn.tailwindcss.com"></script>
+      </head>
 
-//Servidor web
+      <body class="bg-gray-200 dark:bg-gray-800">
+      <nav class="bg-white border-gray-200 dark:bg-gray-900">
+      <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <a class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="https://static.vecteezy.com/system/resources/previews/022/744/042/original/clapperboard-isolated-on-a-transparent-background-png.png" class="h-8"/>
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ShowGrade</span>
+        </a>
+        <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+            </svg>
+        </button>
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+          <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <li>
+              <a href="http://localhost:3000" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Inicio</a>
+            </li>
+            <li>
+              <a href="http://localhost:3000/crear" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Crear</a>
+            </li>
+            <li>
+              <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Externos</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      </nav>
+
+`;
+const html_footer = `
+    <footer class="bg-white rounded-lg shadow m-4 dark:bg-gray-800">
+    <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+        <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.
+    </span>
+    <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+        <li>
+            <a href="#" class="hover:underline me-4 md:me-6">About</a>
+        </li>
+        <li>
+            <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
+        </li>
+        <li>
+            <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
+        </li>
+        <li>
+            <a href="#" class="hover:underline">Contact</a>
+        </li>
+    </ul>
+    </div>
+  </footer>
+
+</body>
+</html>
+`;
+
 const http = require('http');
-//Recibe funcion a ejecutar cuando se recibe una petición
-//request: datos de la petición
-//response: objeto que permite enviar datos
-const server = http.createServer((request, response) => {
-    console.log(request.url);//Para mostrar qué se pide al servidor
-    response.setHeader('Content-Type', 'text/html'); //tipo de contenido
-    response.write(`
-    <!DOCTYPE html>
+const server = http.createServer( (request, response) => {    
+    console.log(request.url);
+    if (request.url == "/") {
+      response.setHeader('Content-Type', 'text/html');
+      response.write(html_header);
+      response.write(`
+                      <h2 class="text-4xl font-bold text-center text-blue-500">Tus reseñas</h2>`
+      );
+      response.write(html_footer);
+      response.end();
+    } else if (request.url == "/crear" && request.method == "GET") {
+      
+      response.setHeader('Content-Type', 'text/html');
+      response.write(html_header);
+      response.write(`<h2 class="text-4xl font-bold text-center text-blue-500">Anadir reseña</h2>`);
+      response.write(`
+        <form action="/crear" method="POST" class="max-w-sm mx-auto">
+          <div class="mb-4">
+          <label for="tipo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de producción</label>
+            <select id="tipo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option>Película</option>
+                <option>Cortometraje</option>
+                <option>Documental</option>
+                <option>Serie</option>
+            </select>
+          </div>
 
-    <html>
-    
-        <head>
-            <meta charset="utf-8"> <!--Codificación de caracteres (acentos)-->
-            <title>Lab1_Introduccion-Pag-WEB</title>
-            <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-            <link rel="stylesheet" href="style_lab1.css">
-        </head>
-        <body>
-            <p class = "negrita">Gabriela Chimali Nava Ramirez</p>
-            <li class="negrita">A01710530</li>
-            <li class="negrita">a01710530@tec.mx</li>
-            <h1>Introducción a las aplicaciones web</h1>
-            <!--Pregunta 1-->
-            <h2>1. ¿Cuál es la diferencia entre Internet y la World Wide Web?</h2>
-            <p class="justificado">Internet es una red de computadoras conectadas entre sí. En cambio, la web es una colección de páginas sobre esa red de computadoras. Se usa internet para acceder a la web.</p>
-            <!--Pregunta 2-->
-            <h2>2. ¿Cuáles son las partes de un URL? [1]</h2>
-            <table>
-                <tr>
-                    <th>Parte</th>
-                    <th>Descripción</th>
-                </tr>
-                <tr>
-                    <td>HTTPS</td>
-                    <td>Es el protocolo, cifra y protege los datos transmitidos entre el servidor y el navegador.</td>
-                </tr>
-                <tr>
-                    <td>Dominio</td>
-                    <td>Nombre del servidor que aloja el recurso.</td>
-                </tr>
-                <tr>
-                    <td>TLD</td>
-                    <td>Extensión de dominio, indica el tipo de entidad en que está registrada la organización en Internet.</td>
-                </tr>
-                <tr>
-                    <td>Subdirectorio </td>
-                    <td>Indica en qué sección específica del sitio estás.</td>
-                </tr>
-                <tr>
-                    <td>Ruta</td>
-                    <td>Ubicación del recurso en el servidor</td>
-                </tr>
-            </table>
-            <!--Pregunta 3-->
-            <h2>3. ¿Cuál es el propósito de los métodos HTTP: GET, HEAD, POST, PUT, PATCH, DELETE? [2]</h2>
-            <table>
-                <tr>
-                    <th>Método</th>
-                    <th>Propósito</th>
-                </tr>
-                <tr>
-                    <td>GET</td>
-                    <td>Solicita un recurso específico, sólo recupera datos, la info. solicitada.</td>
-                </tr>
-                <tr>
-                    <td>HEAD</td>
-                    <td>Etiqueta con la info. general del documento.</td>
-                </tr>
-                <tr>
-                    <td>POST</td>
-                    <td>Crea un nuevo recurso, requiere una definición de datos de la entidad a crear.</td>
-                </tr>
-                <tr>
-                    <td>PUT</td>
-                    <td>Modifica un recurso, si no encuentra un recurso coincidente, crea uno nuevo.</td>
-                </tr>
-                <tr>
-                    <td>PATCH</td>
-                    <td>Aplica una modificación parcial a un recurso, indicando sólo los datos a actualizar.</td>
-                </tr>
-                <tr>
-                    <td>DELETE</td>
-                    <td>Elimina un recurso.</td>
-                </tr>
-            </table>
-            <!--Pregunta 4-->
-            <h2>4. ¿Qué método HTTP se debe utilizar al enviar un formulario HTML, por ejemplo cuando ingresas tu usuario y contraseña en algún sitio? ¿Por qué? [3]</h2>
-            <p class="justificado">Comúnmente GET y POST, el primero solicita datos y el segundo envía los recibidos.</p>
-            <!--Pregunta 5-->
-            <h2>5. ¿Qué método HTTP se utiliza cuando a través de un navegador web se accede a una página a través de un URL?</h2>
-            <p>GET que solicita recursos de un servidor web, que aloja dicho URL.</p>
-            <!--Pregunta 6-->
-            <h2>6. Un servidor web devuelve una respuesta HTTP con código 200. ¿Qué significa esto? ¿Ocurrió algún error?</h2>
-            <p class="justificado">Indica que la solicitud fue completada exitosamente, no ocurrió ningún error.</p>
-            <!--Pregunta 7-->
-            <h2>7. ¿Es responsabilidad del desarrollador corregir un sitio web si un usuario reporta que intentó acceder al sitio y se encontró con un error 404? ¿Por qué? [3]</h2>
-            <p class="justificado">Este error significa que no se pudo encontrar la página solicitada, es responsabilidad del desarrollador si la página fue eliminada o trasladada, si hubo algún error en la configuración del servidor o un problema de conexión; sin embargo puede ocurrir si se ingresa incorrectamente la URL.</p>
-            <!--Pregunta 8-->
-            <h2>8. ¿Es responsabilidad del desarrollador corregir un sitio web si un usuario reporta que intentó acceder al sitio y se encontró con un error 500? ¿Por qué?</h2>
-            <p class="justificado">Sí, pues indica un error en el servidor interno que impide cumplir una solicitud.</p>
-            <!--Pregunta 9-->
-            <h2>9. ¿Qué significa que un atributo HTML5 esté depreciado o desaprobado (deprecated)? Menciona algunos elementos de HTML4 que en HTML5 estén desaprobados.</h2>
-            <p class="justificado">Significa que el atributo ya no es recomendado, pero aún es soportado por los navegadores (puede desplegarse).  En HTML5 se recomienda CSS para aplicar formato al texto, mientras que en HTML4 se empleaban etiquetas, ahora obsoletas, como center para centrar un texto o basefont para definir una tipografía por defecto.</p>
-            <!--Pregunta 10-->
-            <h2>10. ¿Cuáles son las diferencias principales entre HTML 4 y HTML5? [4]</h2>
-            <li>La mayoría de sus funciones son compatibles con navegadores modernos, otras versiones pueden tener funciones obsoletas no soportadas por estos navegadores.</li>
-            <li>HTML5 es compatible con múltiples archivos multimedia (audio, video, gráficos, animaciones).</li>
-            <li>HTML4 se basaba en el estándar SGML, a comparación con el HTML5 que analiza con sus propias reglas.</li>
-            <li>HTML5 cuenta con etiquetas más limpias y con mayor capacidad de respuesta.</li>
-            <li>HTML5 funciona con mayor fluidez en dispositivos pequeños y menos potentes, si lo comparamos con versiones anteriores.</li>
-            <li>HTML5 admite almacenamiento local a través de API, así como en bases de datos web SQL.</li>
-            <li>HTML4 dependía de sistemas externos actualmente en desuso, HTML5 puede hacer muchas cosas de forma nativa.</li>
-            <!--Pregunta 11-->
-            <h2>11. ¿Qué componentes de estructura y estilo tiene una tabla?</h2>
-            <table>
-                <tr>
-                    <th>Estructura</th>
-                    <th>Estilo</th>
-                </tr>
-                <tr>
-                    <td>- table: Elemento tabla, representa info. con más de una dimensión.
-                        <br>- tr: Representa una fila en la tabla.
-                        <br>- td: Representa la info. en una celda en la tabla.
-                        <br>- th: Representa una celda de encabezado en una fila de la tabla.</td>
-                    <td>Utilizando CSS se puede:
-                        <br>- border: Agregar bordes en table, th, td.
-                        <br>- background-color: Establecer un color para cada celda.
-                        <br>- padding: Para ajustar el tamaño del texto en una celda.
-                        <br>- text-align: Para alinear el texto.
-                    </td>
-                </tr>
-            </table>
-            <!--Pregunta 12-->
-            <h2> 12. ¿Cuáles son los principales controles de una forma HTML5?</h2>
-            <p> Permiten al usuario introducir datos, marcar o seleccionar opciones, o incluso subir archivos:
-                <br>* text - Introducir línea de texto
-                <br>* password - Introducir caracteres que se ocultan
-                <br>* textarea - Introducir texto de varias líneas
-                <br>* checkbox - Permite marcar casillas de verificación
-                <br>* radio - Permite elegir una opción con botones de selección</p>
-            <p> Agregadas a HTML5:
-                <br>* date - Seleccionar una fecha
-                <br>* time - Seleccionar una hora
-                <br>* email - Introducir una dirección de correo electrónico
-                <br>* url - Introducir una URL
-                <br>* search - Introducir una búsqueda
-                <br>* color - Seleccionar un color</p>
-            <!--Pregunta 13-->
-            <h2> 13. ¿Qué tanto soporte HTML5 tiene el navegador que utilizas? Puedes utilizar la siguiente página para descubrirlo:</h2>
-            <p> Uso Chrome que tiene un score de 538 de 571 puntos.</p>
-            <!--Pregunta 14-->
-            <h2> Sobre el ciclo de vida y desarrollo de los sistemas de información:<br>14. ¿Cuál es el ciclo de vida de los sistemas de información? [5]</h2>
-            <p class="justificado">Abarca desde la concepción de la idea de crear/optimizar el sistema, hasta que este es reutilizado o se vuelve obsoleto.</p>
-            <!--Pregunta 15-->
-            <h2> 15. ¿Cuál es el ciclo de desarrollo de sistemas de información? [5]</h2>
-            <p class="justificado">Fase de creación del sistema, se implementa, prueba, corrige, da mantenimiento.</p>
-            <h2>Referencias</h2>
-            <p>[1]  Chi, C. (2023, 10 mayo). Parts of a URL: AShort Guide. HubSpot. https://blog.hubspot.com/marketing/parts-url</p>
-            <p>[2]  Ramos, C. (2022, 27 enero). HTTP Request Methods: Get vs Put vs Post Explained with Code Examples. freeCodeCamp. https://www.freecodecamp.org/news/http-request-methods-explained/</p>
-            <p>[3]  Digital Guide IONOS. (2023, 31 enero). Error 404: ¿Qué significa y cómo solucionarlo? https://www.ionos.mx/digitalguide/paginas-web/creacion-de-paginas-web/que-significa-el-error-404-not-found/</p>
-            <p>[4]  Barrón, B. (2021, 8 abril). HTML vs HTML5: Conoce las diferencias cruciales entre ellos. Kista. https://kinsta.com/es/blog/html-vs-html5/#:~:text=Como%20ya%20se%20ha%20dicho,Java%20Web%20Start%20y%20Flash</p>
-            <p>[5]  Yedra, Y. (2017, 26 marzo). Ciclo de vida de los sistemas de información. SlideShare. https://es.slideshare.net/YaskellyYedra/ciclo-de-vida-de-los-sistemas-de-informacion-73671543</p></p>
-        </body>
-        <footer>
-            <h3>Visual Studio Code <br><a href="https://code.visualstudio.com/">Sitio web del IDE</a></h3>
-        </footer>
-    </html>
-    `); //escribir en la respuesta
-    response.end(); //terminar la respuesta
+          <!-- Título -->
+          <div class="mb-4">
+            <label for="titulo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Título</label>
+            <input type="text" id="titulo" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          </div>
+
+          <!-- Fecha -->
+          <div class="mb-4">
+            <label for="fecha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha</label>
+            <input id="fecha" type="date" name="fecha" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          </div>
+
+          <!-- Calificación -->
+          <div class="mb-4">
+            <label for="calificacion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Calificación</label>
+            <input id="calificacion" type="range" min="0" max="5" step="0.5" name="calificacion" class="form-range block w-full mt-1">
+            <output for="calificacion" class="text-gray-500 text-sm mt-2">0</output>
+
+            <script>
+            const calificacion = document.getElementById('calificacion');
+            const calificacionValor = document.querySelector('output[for="calificacion"]');
+
+            calificacion.addEventListener('input', function() {
+                calificacionValor.textContent = calificacion.value;
+            });
+            </script>
+
+            </div>
+          </div>
+
+          <!-- Reseña -->
+          <div class="mb-4">
+            <textarea id="resenia" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Escribe tu reseña..."></textarea>
+          </div>
+
+          <!-- Imagen -->
+          <div class="mb-4">
+            <label for="imagen" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imagen URL</label>
+            <input type="text" id="imagen" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          </div>
+
+          <!-- Botón de enviar -->
+          <div class="text-right">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Enviar</button>
+          </div>
+        </form>
+      `);
+        response.write(html_footer);
+        response.end();
+    } else {
+        response.writeHead(404, { "Content-Type": "text/html" });
+        response.write(html_header);
+        response.write(`<h2 class="title">Esta ruta no es válida...</h2>`);
+        response.write(html_footer);
+        response.end();
+    }
 });
-//Mantener 'vivo' el servidor 
-server.listen(3000); //puerto en el que se escucha
-
+server.listen(3000);

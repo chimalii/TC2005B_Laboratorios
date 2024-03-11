@@ -1,0 +1,33 @@
+{
+  "name": "lab8",
+  "version": "1.0.0",
+  "description": "Proyecto de clase TC2005 lab11",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chimalii/TC2005B_Laboratorios.git"
+  },
+  "keywords": [
+    "tc2005b"
+  ],
+  "author": "Chimali Nava",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chimalii/TC2005B_Laboratorios/issues"
+  },
+  "homepage": "https://github.com/chimalii/TC2005B_Laboratorios#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.9.2"
+  }
+}
