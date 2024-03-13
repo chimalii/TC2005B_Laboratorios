@@ -17,5 +17,3 @@ const rutasClases= require('./routes/clases.routes');
 app.use('/', rutasClases);
 
 app.listen(3000);
-
-

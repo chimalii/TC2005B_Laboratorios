@@ -39,7 +39,10 @@ const html_header = `
                   <a href="http://localhost:3000/crear" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Crear</a>
                 </li>
                 <li>
-                  <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Externos</a>
+                  <a href="http://localhost:3000/externos" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Externos</a>
+                </li>
+                <li>
+                  <a href="http://localhost:3000/personal" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Personal</a>
                 </li>
               </ul>
             </div>
@@ -183,6 +186,87 @@ router.get('/', (request, response, next) => {
     }
     html += html_footer;
     response.send(html);
+});
+
+router.get('/externos', (request, response, next) => {
+  let html = html_header;
+  html += `
+    <br><h2 class="text-4xl font-bold text-center text-blue-500">Sitios interesantes sobre cine</h2><br>
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div class="pb-4 bg-white dark:bg-gray-900">
+        <label for="table-search" class="sr-only">Search</label>
+        <div class="relative mt-1">
+            <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+            </div>
+            <input type="text" id="table-search" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar...">
+        </div>
+      </div>
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                  <th scope="col" class="px-6 py-3">
+                      Sitio
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Título
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Descripción corta
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      SENSACINE
+                  </th>
+                  <td class="px-6 py-4">
+                      <a href="https://www.sensacine.com/peliculas/estrenos/es/mes/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Estrenos mensuales</a>
+                  </td>
+                  <td class="px-6 py-4">
+                      Todas las películas que se estrenan este mes semana a semana.
+                  </td>
+              </tr>
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      Fotogramas
+                  </th>
+                  <td class="px-6 py-4">
+                      <a href="https://www.fotogramas.es/noticias-cine/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Últimas noticias de cine</a>
+                  </td>
+                  <td class="px-6 py-4">
+                      Noticias del cine actualmente, con diferentes clasificaciones.
+                  </td>
+              </tr>
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      by IMDbPro
+                  </th>
+                  <td class="px-6 py-4">
+                      <a href="https://www.boxofficemojo.com/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Box Office Mojo</a>
+                  </td>
+                  <td class="px-6 py-4">
+                      Recaudaciones y presupuestos de las películas del momento, actualizado diario con resultados obtenidos en taquilla.
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+      </div>
+    `;
+  html += html_footer;
+  response.send(html);
+});
+
+router.get('/personal', (request, response, next) => {
+  let html = html_header;
+  html += `
+    <br><h2 class="text-4xl font-bold text-center text-blue-500">Agregar contenido personal</h2><br>
+    `;
+  html += html_footer;
+  response.send(html);
 });
 
 router.use((request, response, next) => {
