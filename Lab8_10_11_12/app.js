@@ -18,4 +18,10 @@ const rutasClases= require('./routes/clases.routes');
 
 app.use('/', rutasClases);
 
+const path = require('path');
+app.use((request, response, next) => {
+  response.status(404);
+  response.sendFile(path.join(__dirname, 'views', '404.html')); 
+});
+
 app.listen(3000);

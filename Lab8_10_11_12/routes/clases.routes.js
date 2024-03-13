@@ -65,7 +65,7 @@ const html_footer = `
               <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
           </li>
           <li>
-            <a href="#" class="hover:underline">Contact</a>
+            <a href="https://docs.google.com/document/d/166pncTRdLAvympTGQDACwu9-8kXew3BBFPTSmpcETEU/edit?usp=sharing" class="hover:underline">Preguntas Laboratorios</a>
           </li>
         </ul>
       </div>
@@ -87,7 +87,11 @@ const misResenias = [
 router.get('/crear', (request, response, next) => {
   let html = html_header;
   html += `
-    <br><h2 class="text-4xl font-bold text-center text-blue-500">Anadir reseña</h2><br>
+    <div class="container mx-auto p-4">
+      <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-4">
+        <h2 class="text-2xl font-bold text-center text-blue-500">Añadir reseña</h2>
+      </div>
+    </div>
       <form action="/crear" method="POST" class="max-w-sm mx-auto">
         <div class="mb-4">
         <label for="tipo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de producción</label>
@@ -165,12 +169,15 @@ router.post('/crear', (request, response, next) => {
 router.get('/', (request, response, next) => {
   let html = html_header;
     html += `
-      <br><h2 class="text-4xl font-bold text-center text-blue-500">Tus reseñas</h2><br>`;
-    
+      <div class="container mx-auto p-4">
+        <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-4">
+          <h2 class="text-2xl font-bold text-center text-blue-500">Tus reseñas</h2>
+        </div>
+      </div>`;
     for (let misResenia of misResenias) {
       html += `
       <div class="flex items-center justify-center">  
-      <div class="mb-4">
+      <div class="container mx-auto p-4">
           <a href="#" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
             <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="${misResenia.imagen}" alt="">
             <div class="flex flex-col justify-between p-4 leading-normal">
@@ -191,7 +198,12 @@ router.get('/', (request, response, next) => {
 router.get('/externos', (request, response, next) => {
   let html = html_header;
   html += `
-    <br><h2 class="text-4xl font-bold text-center text-blue-500">Sitios interesantes sobre cine</h2><br>
+    <div class="container mx-auto p-4">
+      <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-4">
+        <h2 class="text-2xl font-bold text-center text-blue-500">Sitios interesantes sobre cine</h2>
+      </div>
+    </div>
+    <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-4">
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <div class="pb-4 bg-white dark:bg-gray-900">
         <label for="table-search" class="sr-only">Search</label>
@@ -255,6 +267,7 @@ router.get('/externos', (request, response, next) => {
           </tbody>
       </table>
       </div>
+    </div>
     `;
   html += html_footer;
   response.send(html);
@@ -267,14 +280,6 @@ router.get('/personal', (request, response, next) => {
     `;
   html += html_footer;
   response.send(html);
-});
-
-router.use((request, response, next) => {
-  response.writeHead(404, { "Content-Type": "text/html" });
-        response.write(html_header);
-        response.write(`<br><h2 class="text-2xl font-bold text-center text-blue-500">Error 404! Esta ruta no es válida...</h2><br>`);
-        response.write(html_footer);
-        response.end();
 });
 
 module.exports = router;
