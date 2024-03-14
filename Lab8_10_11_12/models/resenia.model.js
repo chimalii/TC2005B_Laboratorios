@@ -37,5 +37,4 @@ module.exports = class Resenia {
     static fetchAll() {
         return misResenias;
     }
-
 }

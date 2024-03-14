@@ -1,0 +1,53 @@
+<%- include ('includes/header.ejs') %>
+
+<div class="container mx-auto p-4">
+    <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-4">
+        <h2 class="text-2xl font-bold text-center text-blue-500">Lista de producciones - Por Ver</h2>
+    </div>
+</div>
+
+<div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-4">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+            <th scope="col" class="px-6 py-3">
+                Tipo
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Título
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Estado
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+<%  for (let miProduccion of misPorVer) { %>
+
+    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <%= miProduccion.tipo_por_ver %>
+        </th>
+        <td class="px-6 py-4">
+            <%= miProduccion.titulo_por_ver %>
+        </td>
+        <td class="px-6 py-4">
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="Por Ver" class="text-white bg-red-800 font-medium" <% if(miProduccion.estado === 'Por Ver') { %> selected <% } %>>Por Ver</option>
+                    <option value="En Curso" class="text-white bg-yellow-700 font-medium" <% if(miProduccion.estado === 'En Curso') { %> selected <% } %>>En Curso</option>
+                    <option value="Vista" class="text-white bg-green-800 font-medium" <% if(miProduccion.estado === 'Vista') { %> selected <% } %>>Vista</option>
+            </select>
+        </td>
+    </tr>
+
+<% } %>
+
+        </tbody>
+    </table>
+    </div>
+</div>
+
+<%- include ('includes/footer.ejs') %>

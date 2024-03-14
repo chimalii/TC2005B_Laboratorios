@@ -1,41 +1,16 @@
 const express = require('express');
-
 const router = express.Router();
 
-router.get('/crear', (request, response, next) => {
-  response.render('crear');
-});
+const reseniasController = require('../controllers/resenias.controller');
+const porVerController = require('../controllers/porVer.controller');
 
-router.post('/crear', (request, response, next) => {
-  console.log(request.body);
-  misResenias.push({
-    tipo: request.body.tipo,
-    titulo: request.body.titulo, 
-    fecha: request.body.fecha,
-    calificacion: request.body.calificacion,
-    resenia: request.body.resenia,
-    imagen: request.body.imagen,
-  });
-  response.redirect('/');
-});
-
-router.get('/', (request, response, next) => {
-  response.render('cards_resenias',{
-    misResenias: misResenias,
-  });
-});
-
-router.get('/externos', (request, response, next) => {
-  response.render('externos');
-});
-
-router.get('/personal', (request, response, next) => {
-  let html = html_header;
-  html += `
-    <br><h2 class="text-4xl font-bold text-center text-blue-500">Agregar contenido personal</h2><br>
-    `;
-  html += html_footer;
-  response.send(html);
-});
+router.get('/crear', reseniasController.get_crear);
+router.post('/crear', reseniasController.post_crear);
+router.get('/', reseniasController.get_root);
+router.get('/crear_porVer', porVerController.get_crear_porVer);
+router.post('/crear_porVer', porVerController.post_porVer);
+router.get('/porVer', porVerController.get_porVer);
+router.get('/externos', (request, response) => {response.render('externos');});
+router.get('/personal', (request, response) => {response.render('personal');});
 
 module.exports = router;
