@@ -5,6 +5,7 @@ const router = express.Router();
 const misResenias = [
   {
     titulo: "Phanthom Thread", 
+    tipo: "Película",
     fecha: "2017-12-25", 
     calificacion: 5, 
     resenia: "Phantom Thread's finely woven narrative is filled out nicely by humor, intoxicating romantic tension, and yet another impressively committed performance from Daniel Day-Lewis.", 
@@ -19,7 +20,8 @@ router.get('/crear', (request, response, next) => {
 router.post('/crear', (request, response, next) => {
   console.log(request.body);
   misResenias.push({
-    titulo: request.body.titulo, 
+    titulo: request.body.titulo,
+    tipo: request.body.tipo, 
     fecha: request.body.fecha,
     calificacion: request.body.calificacion,
     resenia: request.body.resenia,
