@@ -10,6 +10,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 /*/Middleware
 app.use((request, response, next) => {
   console.log('Middleware!');
