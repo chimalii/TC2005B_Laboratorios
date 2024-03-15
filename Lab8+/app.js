@@ -27,8 +27,10 @@ app.use((request, response, next) => {
 });
 */
 
-const rutasClases= require('./routes/clases.routes');
+const rutasUsuarios = require('./routes/users.routes');
+app.use('/users', rutasUsuarios);
 
+const rutasClases= require('./routes/clases.routes');
 app.use('/', rutasClases);
 
 app.use((request, response, next) => {
