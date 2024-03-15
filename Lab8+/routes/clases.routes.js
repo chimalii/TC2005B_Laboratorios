@@ -10,7 +10,7 @@ router.get('/', reseniasController.get_root);
 router.get('/crear_porVer', porVerController.get_crear_porVer);
 router.post('/crear_porVer', porVerController.post_porVer);
 router.get('/porVer', porVerController.get_porVer);
-router.get('/externos', (request, response) => {response.render('externos');});
-router.get('/personal', (request, response) => {response.render('personal');});
+router.get('/externos', (request, response) => {response.render('externos', { username: request.session.username || ''})});
+router.get('/personal', (request, response) => {response.render('personal', { username: request.session.username || ''})});
 
 module.exports = router;
