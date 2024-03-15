@@ -1,7 +1,9 @@
 const Resenia = require('../models/resenia.model');
 
 exports.get_crear = (request, response, next) => {
-    response.render('crear');
+    response.render('crear', {
+        username: request.session.username || '',
+    });
 };
 
 exports.post_crear = (request, response, next) => {
@@ -18,6 +20,7 @@ exports.get_root = (request, response, next) => {
     response.render('cards_resenias', {
         misResenias: Resenia.fetchAll(),
         ultima_resenia: request.cookies.ultima_resenia || '',
+        username: request.session.username || '',
     });
 };
 
