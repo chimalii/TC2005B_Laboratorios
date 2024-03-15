@@ -10,7 +10,7 @@ exports.post_crear = (request, response, next) => {
         request.body.tipo, request.body.titulo, request.body.fecha, request.body.calificacion, request.body.resenia, request.body.imagen
     );
     mi_resenia.save();
-    response.setHeader('Set-Cookie', 'ultima_resenia=' + mi_resenia.titulo);
+    response.setHeader('Set-Cookie', 'ultima_resenia=' + mi_resenia.titulo + '; HttpOnly');
     response.redirect('/');
 };
 

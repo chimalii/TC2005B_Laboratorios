@@ -16,6 +16,6 @@ exports.post_porVer = (request, response, next) => {
         request.body.titulo_por_ver, request.body.tipo_por_ver, request.body.estado
     );
     mi_produccion.save();
-    response.setHeader('Set-Cookie', 'ultima_produccion=' + mi_produccion.titulo_por_ver);
+    response.setHeader('Set-Cookie', 'ultima_produccion=' + mi_produccion.titulo_por_ver + '; HttpOnly');
     response.redirect('/porVer');
 };
