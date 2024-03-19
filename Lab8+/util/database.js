@@ -1,8 +1,8 @@
 const mysql = require('mysql2');
 
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root', //*** recomenque no tenga acceso a todo, solo a la base de datos que se va a usar
+    host: '127.0.0.1',
+    user: 'root', //*** recomendado que no tenga acceso a todo, solo a la base de datos que se va a usar
     database: 'showgrade',
     password: 'MYsql.462'
 });
