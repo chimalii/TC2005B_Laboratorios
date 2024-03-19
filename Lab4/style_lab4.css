@@ -1,0 +1,37 @@
+body {
+    margin: 0 auto;
+    max-width: 50em;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    line-height: 1.5;
+    padding: 4em 1em;
+    color: #555;
+}
+
+h1 {
+    font-size: 2em;
+    color: blue;
+    font-weight: bold;
+    text-align: left; /* Alineación a la izquierda */
+}
+
+h2 {
+    font-size: 1em;
+    font-style: italic;
+    color: #333;
+}
+
+p.justificado {
+    text-align: justify;
+}
+
+/* Estilos para el footer */
+footer {
+    background-color: #f0f0f0;
+    padding: 1em;
+    text-align: right; /* Alineación a la derecha */
+}
+
+footer a {
+    color: blue;
+    text-decoration: none;
+}
